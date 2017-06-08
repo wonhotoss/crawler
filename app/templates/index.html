@@ -1,0 +1,18 @@
+{% load staticfiles %}
+<!doctype html>
+<html ng-app='crawler'>
+	<head>
+		<script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js'>
+		</script>
+		<script src="{% static 'crawler.js' %}">
+		</script>
+	</head>
+	<body>
+		<p> Hi There!</p>
+		<div ng-controller="DocListController as docList">
+			<form ng-submit="docList.query()">
+				<input class="btn-primary" type="submit" value="query">
+			</form>
+		</div>
+	</body>
+</html>
