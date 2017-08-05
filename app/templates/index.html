@@ -1,18 +1,24 @@
 {% load staticfiles %}
 <!doctype html>
-<html ng-app='crawler'>
+<html lang='en'>
 	<head>
-		<script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js'>
-		</script>
-		<script src="{% static 'crawler.js' %}">
-		</script>
+		<meta charset="UTF-8">
+		<script src='http://code.angularjs.org/snapshot/angular.min.js'></script>
+		<script src='http://code.angularjs.org/snapshot/angular-sanitize.js'></script>
+		{% load static %}
+		<script src='{% static "crawler.js"%}'></script>
 	</head>
-	<body>
-		<p> Hi There!</p>
+{% verbatim %}
+	<body ng-app='crawler'>
 		<div ng-controller="DocListController as docList">
-			<form ng-submit="docList.query()">
-				<input class="btn-primary" type="submit" value="query">
-			</form>
+			<input
+				type='text'
+				ng-model='docList.searchTerm'
+				placeholder='search term'
+				ng-keyup='$event.keyCode===13?docList.search():0'>
+			<p id='content'>		
+			</p>
 		</div>
 	</body>
+{% endverbatim %}
 </html>
