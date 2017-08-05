@@ -3,6 +3,12 @@ angular.module( 'crawler', ['ngSanitize'] )
 	{
 		var docList = this;
 
+		outputHTML = function( HTML )
+		{				
+			content = document.getElementById('content');
+			content.innerHTML = HTML;
+		};
+
 		docList.search = function()
 		{
 			IDs=[];
@@ -44,6 +50,8 @@ angular.module( 'crawler', ['ngSanitize'] )
 					{
 						oncomplete();
 					}
+				}, function errorCallback(response){
+					outputHTML( response.data );
 				} );
 			};
 				
@@ -71,6 +79,8 @@ angular.module( 'crawler', ['ngSanitize'] )
 						promise.then( function successCallback(response) 
 						{
 							URL.result=response.data[0];
+						}, function errorCallback(response){
+							outputHTML( response.data );
 						});
 						return promise;
 					}( URLs[i] );
@@ -84,12 +94,10 @@ angular.module( 'crawler', ['ngSanitize'] )
 				var completion = Promise.all(promises);
 				completion.then(function(result)
 				{
-					content = document.getElementById('content');
-					content.innerHTML= URLs.reduce(function(sum,elem)
+					outputHTML( URLs.reduce(function(sum,elem)
 					{
 						return sum + elem.result;
-					}, '');
-					console.log(content.innerHTML); 
+					}, '') );					
 				});
 
 			});
